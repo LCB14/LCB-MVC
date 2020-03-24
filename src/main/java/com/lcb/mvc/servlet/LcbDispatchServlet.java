@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lcb.mvc.annotation.Controller;
 import com.lcb.mvc.annotation.RequestMapping;
 import com.lcb.mvc.annotation.ResponseBody;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -37,12 +38,12 @@ public class LcbDispatchServlet extends HttpServlet {
     /**
      * 期望被扫描的包名
      */
-    private static String SCAN_PATH = "";
+    private static String SCAN_PATH = StringUtils.EMPTY;
 
     /**
      * 最终要扫描的目录
      */
-    private static String BASE_PATH = "";
+    private static String BASE_PATH = StringUtils.EMPTY;
 
     /**
      * key:请求URI，value：被标注RequestMapping注解的method对象
@@ -137,13 +138,13 @@ public class LcbDispatchServlet extends HttpServlet {
                     // 判断是不是controller类
                     if (clazz.isAnnotationPresent(Controller.class)) {
                         RequestMapping requestMapping = clazz.getAnnotation(RequestMapping.class);
-                        String url_path = "";
+                        String url_path = StringUtils.EMPTY;
                         if (requestMapping != null) {
                             url_path = requestMapping.value();
                         }
 
                         for (Method method : clazz.getMethods()) {
-                            String methodPath = "";
+                            String methodPath = StringUtils.EMPTY;
                             RequestMapping annotation = method.getAnnotation(RequestMapping.class);
                             if (annotation != null) {
                                 methodPath = annotation.value();
