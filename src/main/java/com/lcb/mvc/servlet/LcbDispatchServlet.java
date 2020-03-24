@@ -29,9 +29,24 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LcbDispatchServlet extends HttpServlet {
 
+    /**
+     * 获取LcbDispatchServlet.class文件所在目录
+     */
     private static String CLASS_PATH = LcbDispatchServlet.class.getResource("/").getPath();
+
+    /**
+     * 期望被扫描的包名
+     */
     private static String SCAN_PATH = "";
+
+    /**
+     * 最终要扫描的目录
+     */
     private static String BASE_PATH = "";
+
+    /**
+     * key:请求URI，value：被标注RequestMapping注解的method对象
+     */
     private static Map<String, Object> map = new ConcurrentHashMap();
 
     @Override
@@ -75,7 +90,7 @@ public class LcbDispatchServlet extends HttpServlet {
     }
 
     /**
-     * 解析lcbMVC配置文件,获取待扫描包的路径。
+     * 解析lcbMVC.xml配置文件,获取待扫描包的路径。
      *
      * @param config
      * @return
@@ -135,7 +150,7 @@ public class LcbDispatchServlet extends HttpServlet {
                                 if (map.putIfAbsent(url_path + methodPath, method) != null) {
                                     throw new RuntimeException("映射地址重复");
                                 }
-                                System.out.println(url_path+methodPath + "被成功映射到了" + clazz.getName() + "的" + method.getName() + "方法上");
+                                System.out.println(url_path + methodPath + "被成功映射到了" + clazz.getName() + "的" + method.getName() + "方法上");
                             }
                         }
                     }
