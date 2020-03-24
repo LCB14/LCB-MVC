@@ -123,8 +123,8 @@ public class LcbDispatchServlet extends HttpServlet {
         try {
             // 递归扫描
             if (file.isDirectory()) {
-                for (File file1 : file.listFiles()) {
-                    scanProject(file1);
+                for (File item : file.listFiles()) {
+                    scanProject(item);
                 }
             } else {
                 // 判断是不是class文件
