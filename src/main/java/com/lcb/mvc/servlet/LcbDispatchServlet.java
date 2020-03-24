@@ -35,6 +35,14 @@ public class LcbDispatchServlet extends HttpServlet {
     private static Map<String, Object> map = new ConcurrentHashMap();
 
     @Override
+    public void init(ServletConfig config) throws ServletException {
+        String path = parseXML(config);
+        File file = new File(path);
+        BASE_PATH = file.getPath();
+        scanProject(file);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
@@ -64,14 +72,6 @@ public class LcbDispatchServlet extends HttpServlet {
         } else {
             resp.setStatus(404);
         }
-    }
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        String path = parseXML(config);
-        File file = new File(path);
-        BASE_PATH = file.getPath();
-        scanProject(file);
     }
 
     /**
