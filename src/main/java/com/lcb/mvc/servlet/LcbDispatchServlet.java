@@ -98,11 +98,10 @@ public class LcbDispatchServlet extends HttpServlet {
      */
     public String parseXML(ServletConfig config) {
         String contextConfigLocation = config.getInitParameter("contextConfigLocation");
-
         try {
+            SAXReader saxReader = new SAXReader();
             CLASS_PATH = CLASS_PATH.replaceAll("%20", " ");
             File file = new File(CLASS_PATH + contextConfigLocation);
-            SAXReader saxReader = new SAXReader();
             Document doc = saxReader.read(file);
             Element rootElement = doc.getRootElement();
             Element packageScan = rootElement.element("packageScan");
